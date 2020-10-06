@@ -1,13 +1,35 @@
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Wine Tour Planner</title>
+<meta charset="UTF-8">
+<title>Wine Tour Planner</title>
+
+<link rel="stylesheet" href="/css/winery-tour-planner.css">
 </head>
 <body>
-<h1>Hello!</h1>
-<p>Welcome to <span th:text="${appName}">Our App</span></p>
-<br>
-<br>
-<a th:href="@{http://www.thymeleaf/documentation.html}">
+	<div class="title-container">
+		 <center>
+		 <font class="title_font">Winery Tour Planner</font>
+		 </center>
+	</div>
+	<center>
+		<div class="form-login-container">
+			<form action="/login" method="post">
+				<div class="login-container" )>
+					<label for="username"><b>Username</b></label> <input type="text"
+						placeholder="Enter Username" name="username" required> <label
+						for="password"><b>Password</b></label> <input type="password"
+						placeholder="Enter Password" name="password" required>
+
+					<button type="submit">Login</button>
+				</div>
+
+				<div align="center">
+					<button type="button" class="signupbtn"
+						onclick="window.location.href='/sign-up'">Sign Up</button>
+				</div>
+
+			</form>
+		</div>
+	</center>
 </body>
 </html>
