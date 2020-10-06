@@ -34,9 +34,18 @@
 
 					<label for="role"><b>What kind of user are you?</b><br></label>
 					
+					<!--  
 					<select name="roles" id="roles">
   						<option value="tourist">Tourist</option>
   						<option value="vintner">Vintner</option>
+					</select>
+					-->
+					
+					<select name="role" id="role">
+						<option th:each="userRole : ${userRoles}"
+							th:value="${userRole}"
+							th:text="${userRole}">
+						</option>
 					</select>
 					
 					<button type="submit">Create an Account</button>
