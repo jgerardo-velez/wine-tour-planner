@@ -49,4 +49,10 @@ public class HomeController {
 		return "admin-dashboard";
 	}
 	
+	@GetMapping("/forgot-password")
+	public String forgotPasswordForm(Model model) {
+	
+		return "forgot-password";
+	}
+	
 }
