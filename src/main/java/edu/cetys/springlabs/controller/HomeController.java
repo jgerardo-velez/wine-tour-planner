@@ -20,39 +20,6 @@ public class HomeController {
     public String homePage(Model model) {
         model.addAttribute("appName", appName);
         return "home";
-    }
-	
-	@GetMapping("/sign-up")
-	public String signUp(Model model) {
-	
-		return "sign-up";
-	}
-	
-	@GetMapping("/winery-dashboard")
-	public String wineryDashboard(Model model) {
-	
-		logger.info("Getting inside the winery dashboard!");
-		return "winery-dashboard";
-	}
-	
-	@GetMapping("/tourist-dashboard")
-	public String touristDashboard(Model model) {
-	
-		logger.info("Getting inside the winery dashboard!");
-		return "tourist-dashboard";
-	}
-	
-	@GetMapping("/admin-dashboard")
-	public String adminDashboard(Model model) {
-	
-		logger.info("Getting inside the winery dashboard!");
-		return "admin-dashboard";
-	}
-	
-	@GetMapping("/forgot-password")
-	public String forgotPasswordForm(Model model) {
-	
-		return "forgot-password";
-	}
-	
+    }	
+
 }
