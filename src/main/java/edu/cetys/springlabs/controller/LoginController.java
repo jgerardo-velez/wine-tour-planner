@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.cetys.springlabs.model.UserCredential;
 
@@ -17,32 +18,33 @@ public class LoginController {
 	private static Logger logger = LoggerFactory.getLogger("LoginController.class");
 	
 	@PostMapping("/login")
-	public String loginSubmit(@ModelAttribute UserCredential userCredential, Model model) {
+	public String loginSubmit(@ModelAttribute UserCredential userCredential, RedirectAttributes redirectAttributes, Model model) {
 		
 		logger.info("Email: " + userCredential.getEmail());
 		logger.info("Password: " + userCredential.getPassword());
 		
-		if ( !userCredential.getPassword().equals("123") ) {
-			return "home";
+		if ( !userCredential.getPassword().equals("cetys123") ) {
+			redirectAttributes.addFlashAttribute("errorMessage",  "Invalid Credentials!");
+			return "redirect:/";
 		}
 		
 		String dashboard = null;
 		
 		switch(userCredential.getEmail()) {
-		  case "admin@cetys.mx":
+		  case "admin@winetourplanner.com":
 		    dashboard = "admin-dashboard";
 		    break;
-		  case "tourist@cetys.mx":
+		  case "tourist@winetourplanner.com":
 			dashboard = "tourist-dashboard";
 		    break;
-		  case "winery@cetys.mx":
+		  case "winery@winetourplanner.com":
 				dashboard = "winery-dashboard";
 			    break;  
 		  default:
 			  dashboard = "home";
 		}
 			  
-		return "redirect:" + dashboard;
+		return "redirect:/" + dashboard;
 	}
 	
 	@GetMapping("/logout")
@@ -54,7 +56,18 @@ public class LoginController {
 	@GetMapping("/forgot-password")
 	public String forgotPasswordForm(Model model) {
 	
+		
 		return "forgot-password";
+	}
+	
+	@PostMapping("/password-reset")
+	public String passwordReset(@ModelAttribute UserCredential userCredential, RedirectAttributes redirectAttributes, Model model) {
+		
+		logger.info("Email: " + userCredential.getEmail());
+		
+		redirectAttributes.addFlashAttribute("confirmationMessage",  "Thank you, you will shortly receive an email with instructions on how to reset your password.");
+		
+		return "redirect:/forgot-password";
 	}
 	
 }

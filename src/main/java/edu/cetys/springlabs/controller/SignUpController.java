@@ -3,16 +3,24 @@ package edu.cetys.springlabs.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.cetys.springlabs.enums.UserRole;
+import edu.cetys.springlabs.model.UserCredential;
 
 
 @Controller
 public class SignUpController {
 
+	private static Logger logger = LoggerFactory.getLogger("SignUpController.class");
+	
 	@GetMapping("/sign-up")
 	public String signUp(Model model) {
 	
@@ -26,4 +34,15 @@ public class SignUpController {
 		return "sign-up";
 	}
 	
+	/*
+	@PostMapping("/sign-up")
+	public String loginSubmit(@ModelAttribute UserCredential userCredential, RedirectAttributes redirectAttributes, Model model) {
+		
+		logger.info("Email: " + userCredential.getEmail());
+		
+		//redirectAttributes.addFlashAttribute("confirmationMessage",  "Thank you, you will shortly receive an email with instructions on how to reset your password.");
+		
+		return "redirect:/";
+	}
+	*/
 }

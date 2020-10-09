@@ -50,6 +50,12 @@ button:hover {
   background-color: #33B2FF;
 }
 
+.submitbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #4CAF50;
+}
+
 /* Center the avatar image inside this container */
 .imgcontainer {
   text-align: center;
@@ -112,4 +118,17 @@ span.psw {
 .form-title-font {
   font-size: 20px;
   color: white;
+}
+
+span.info, .success, .warning, .error {
+	border: 1px solid green;
+	margin: 5px;
+	padding:5px 10px 5px 40px;
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	background-color: #e1f7cb;
+	border-radius: 3px;
+}
+span{
+  display: inline-block;
 }

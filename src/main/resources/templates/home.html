@@ -24,6 +24,11 @@
 					<input type="password" placeholder="Enter Password" name="password" required>
 
 					<button type="submit">Login</button>
+					
+					<span th:if="${errorMessage != null}">
+						<br>
+						<span style="color:red" th:text="${errorMessage}"></span>
+					</span>
 				</div>
 
 				<div align="center">
@@ -36,9 +41,8 @@
 				Forgot Password?
 				<br/>
 				<br/>
-
 			</form>
-			
+		    
 			
 		</div>
 	</center>
