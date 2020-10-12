@@ -23,7 +23,13 @@ public class LoginController {
 	@Autowired
 	UserService userService;
 	
+	@GetMapping("/login")
+	public String login(Model model) {
+		return "login";
+	}
 	
+	
+	/*
 	@PostMapping("/login")
 	public String loginSubmit(@ModelAttribute UserCredential userCredential, RedirectAttributes redirectAttributes, Model model) {
 		
@@ -56,12 +62,15 @@ public class LoginController {
 			  
 		return "redirect:/" + dashboard;
 	}
+	*/
 	
+	/*
 	@GetMapping("/logout")
 	public String logout(Model model) {
 	
 		return "redirect:/";
 	}
+	*/
 	
 	@GetMapping("/forgot-password")
 	public String forgotPasswordForm(Model model) {

@@ -1,50 +1,17 @@
-<html>
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Wine Tour Planner</title>
-
-<link rel="stylesheet" href="/css/winery-tour-planner.css">
+	<title>Wine Tour Planner</title>
 </head>
 <body>
-	<div class="title-container">
-		 <center>
-		 <font class="title-font">Winery Tour Planner</font>
-		 </center>
-	</div>
-	<br/>
-	<br/>
-	<center>
-		<div class="form-login-container">
-			<form action="/login" method="post">
-				<div class="login-container" )>
-					<label for="email"><b>Email</b></label> 
-					<input type="text" placeholder="Enter Email" name="email" required> 
-					
-					<label for="password"><b>Password</b></label> 
-					<input type="password" placeholder="Enter Password" name="password" required>
+    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 
-					<button type="submit">Login</button>
-					
-					<span th:if="${errorMessage != null}">
-						<br>
-						<span style="color:red" th:text="${errorMessage}"></span>
-					</span>
-				</div>
+    <div>
+    	Home Page - Under Construction.
+    </div>
 
-				<div align="center">
-					<button type="button" class="signupbtn"
-						onclick="window.location.href='/sign-up'">Sign Up</button>
-				</div>
-
-				<br/>
-				<a th:href="@{/forgot-password}">
-				Forgot Password?
-				<br/>
-				<br/>
-			</form>
-		    
-			
-		</div>
-	</center>
+    <br/>        
+    <form th:action="@{/logout}" method="post">
+    	<input type="submit" value="Sign Out"/>
+    </form>
 </body>
-</html>
+</html>		
