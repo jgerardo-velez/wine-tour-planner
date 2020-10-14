@@ -43,7 +43,8 @@ public class SignUpController {
 	@PostMapping("/sign-up")
 	public String loginSubmit(@ModelAttribute UserRegistration userRegistration, /*RedirectAttributes redirectAttributes,*/ Model model) {
 		
-		userService.addUser(userRegistration);
+		logger.info("New user registration");
+		//userService.addUser(userRegistration);
 		
 		//redirectAttributes.addFlashAttribute("confirmationMessage",  "Thank you, you will shortly receive an email with instructions on how to reset your password.");
 		
