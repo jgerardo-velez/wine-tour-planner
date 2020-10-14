@@ -9,6 +9,15 @@ package edu.cetys.springlabs.model;
 public class UserRegistration {
 
 	private String email;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	private String name;
 	private String password;
 	private String confirmationPassword;
 	private String role;

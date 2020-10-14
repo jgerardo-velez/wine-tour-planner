@@ -30,12 +30,11 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 		
 		if (roles.contains("ROLE_ADMIN")) {
             response.sendRedirect("/admin-dashboard");
-        } else if (roles.contains("ROLE_TOURIST")) {
-        	response.sendRedirect("/tourist-dashboard");
+        } else if (roles.contains("ROLE_VINTNER")) {
+        	response.sendRedirect("/winery-dashboard");
         } else {
-            response.sendRedirect("/winery-dashboard");
+        	response.sendRedirect("/tourist-dashboard");
         }
-
 	}
 
 
