@@ -79,8 +79,9 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.deleteCookies("JSESSIONID")     
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))            
             .logoutSuccessUrl("/login")
-        .and()    
-        .csrf().disable();    // temporary disable to allow POST messages)  
+        ;
+        //.and()    
+        //.csrf().disable();    // temporary disable to allow POST messages)  
     }
 	
     

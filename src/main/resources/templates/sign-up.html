@@ -16,6 +16,8 @@
 	<center>
 		<div class="form-login-container">
 			<form action="/sign-up" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				
 				<div  class="form-title-container">
 					<font class="form-title-font">Sign Up Form</font>
 				</div>
