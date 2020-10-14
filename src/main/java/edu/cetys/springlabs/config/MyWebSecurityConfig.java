@@ -35,20 +35,6 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 		
 		auth.userDetailsService(userDetailsService);
-		
-		
-		/*
-		System.out.println("PASSWORD ENCODED: " + passwordEncoder().encode("cetys123"));
-		
-		
-		
-        auth.inMemoryAuthentication()
-          .withUser("admin@winetourplanner.com").password(passwordEncoder().encode("cetys123")).roles("ADMIN")
-          .and()
-          .withUser("tourist@winetourplanner.com").password(passwordEncoder().encode("cetys123")).roles("TOURIST")
-          .and()
-          .withUser("vintner@winetourplanner.com").password(passwordEncoder().encode("cetys123")).roles("VINTNER");
-         */
     }
     
 		
@@ -97,19 +83,9 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 	
     
-    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     
-    
-    /*
-    @Bean
-    public PasswordEncoder getPasswordEncoder() {
-    	return NoOpPasswordEncoder.getInstance();
-    }
-    */
-    
- 
 }
