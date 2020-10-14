@@ -1,8 +1,9 @@
-package edu.cetys.springlabs;
+package edu.cetys.springlabs.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -49,8 +51,10 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
         .httpBasic();  
         */
     	
+    	
     	http
         .authorizeRequests()
+            .antMatchers(HttpMethod.POST, "/password-reset").permitAll()
         	.antMatchers("/sign-up").permitAll()
         	.antMatchers("/forgot-password").permitAll()
         	.antMatchers("/css/*").permitAll()
@@ -60,56 +64,20 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/winery-dashboard").hasRole("VINTNER")
         	.anyRequest().authenticated() 
             .and()
-        .formLogin()                      
+        .formLogin()           
+        	.loginPage("/login").permitAll()           
             .successHandler(authenticationSuccessHandler)
-            .permitAll()
             .and()
         .httpBasic()
     	    .and()
         .logout()
-            .permitAll()
-            .and()
-        .csrf().disable();
-        
-    	
-    	
-    	/*
-    	http
-    		.csrf().disable()
-    		.authorizeRequests()
-    		.antMatchers("/sign-up").permitAll()
-    		.antMatchers("/forgot-password").permitAll()
-    		.antMatchers("/css/*").permitAll()
-    		.antMatchers("/images/*").permitAll()
-    		.anyRequest().authenticated()
-    		.and()
-    		.formLogin()
-    		.loginPage("/")
-    		///.defaultSuccessUrl("/admin-dashboard", true)
-    		.permitAll();
-    		*/
-    	
-    	/*
-        http
-          .csrf().disable()
-          .authorizeRequests()
-          .antMatchers("/admin/**").hasRole("ADMIN")
-          .antMatchers("/anonymous*").anonymous()
-          .antMatchers("/login*").permitAll()
-          .anyRequest().authenticated()
-          .and()
-          .formLogin()
-          .loginPage("/login.html")
-          .loginProcessingUrl("/perform_login")
-          .defaultSuccessUrl("/homepage.html", true)
-          //.failureUrl("/login.html?error=true")
-          .failureHandler(authenticationFailureHandler())
-          .and()
-          .logout()
-          .logoutUrl("/perform_logout")
-          .deleteCookies("JSESSIONID")
-          .logoutSuccessHandler(logoutSuccessHandler());
-       */   
+        	.clearAuthentication(true)
+        	.invalidateHttpSession(true)    // set invalidation state when logout
+        	.deleteCookies("JSESSIONID")     
+            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))            
+            .logoutSuccessUrl("/login")
+        .and()    
+        .csrf().disable();    // temporary disable to allow POST messages)  
     }
 	
     

@@ -1,4 +1,4 @@
-package edu.cetys.springlabs;
+package edu.cetys.springlabs.config;
 
 import java.io.IOException;
 import java.util.Set;

@@ -29,49 +29,6 @@ public class LoginController {
 	}
 	
 	
-	/*
-	@PostMapping("/login")
-	public String loginSubmit(@ModelAttribute UserCredential userCredential, RedirectAttributes redirectAttributes, Model model) {
-		
-		logger.info("Email: " + userCredential.getEmail());
-		logger.info("Password: " + userCredential.getPassword());
-		
-		UserCredential repoUserCredential = userService.getUser(userCredential.getEmail());
-		
-		if ( repoUserCredential == null
-			 || !userCredential.getPassword().equals(repoUserCredential.getPassword()) ) {
-			redirectAttributes.addFlashAttribute("errorMessage",  "Invalid Credentials!");
-			return "redirect:/";
-		}
-		
-		String dashboard = null;
-		
-		switch( repoUserCredential.getRole() ) {
-		  case "Administrator":
-		    dashboard = "admin-dashboard";
-		    break;
-		  case "Tourist":
-			dashboard = "tourist-dashboard";
-		    break;
-		  case "Vintner":
-				dashboard = "winery-dashboard";
-			    break;  
-		  default:
-			  dashboard = "home";
-		}
-			  
-		return "redirect:/" + dashboard;
-	}
-	*/
-	
-	/*
-	@GetMapping("/logout")
-	public String logout(Model model) {
-	
-		return "redirect:/";
-	}
-	*/
-	
 	@GetMapping("/forgot-password")
 	public String forgotPasswordForm(Model model) {
 	
