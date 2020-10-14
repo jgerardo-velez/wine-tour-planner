@@ -8,7 +8,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -21,6 +23,9 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	private final AuthenticationSuccessHandler authenticationSuccessHandler;
 
 	@Autowired
+	UserDetailsService userDetailsService;
+	
+	@Autowired
     public MyWebSecurityConfig(MyAuthenticationSuccessHandler myAuthenticationSuccessHandler) {
         this.authenticationSuccessHandler = myAuthenticationSuccessHandler;
     }
@@ -28,12 +33,22 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+		
+		auth.userDetailsService(userDetailsService);
+		
+		
+		/*
+		System.out.println("PASSWORD ENCODED: " + passwordEncoder().encode("cetys123"));
+		
+		
+		
         auth.inMemoryAuthentication()
           .withUser("admin@winetourplanner.com").password(passwordEncoder().encode("cetys123")).roles("ADMIN")
           .and()
           .withUser("tourist@winetourplanner.com").password(passwordEncoder().encode("cetys123")).roles("TOURIST")
           .and()
           .withUser("vintner@winetourplanner.com").password(passwordEncoder().encode("cetys123")).roles("VINTNER");
+         */
     }
     
 		
@@ -82,9 +97,19 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 	
     
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
     
+    
+    /*
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+    	return NoOpPasswordEncoder.getInstance();
+    }
+    */
+    
+ 
 }
