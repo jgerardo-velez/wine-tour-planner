@@ -41,7 +41,7 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
     	
-    	// Default behaviour
+    	// Default behavior
     	/*
     	http
         .authorizeRequests()
@@ -66,7 +66,9 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/winery-dashboard").hasAnyRole("ADMIN", "VINTNER")
         	.anyRequest().authenticated() 
             .and()
-        .formLogin()           
+        .formLogin()  
+            //.usernameParameter("email")
+            //.passwordParameter("password")
         	.loginPage("/login").permitAll()           
             .successHandler(authenticationSuccessHandler)
             .and()
