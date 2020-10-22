@@ -60,7 +60,7 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/forgot-password").permitAll()
         	.antMatchers("/css/*").permitAll()
         	.antMatchers("/images/*").permitAll()
-        	.antMatchers("/admin-dashboard").hasRole("ADMIN")
+        	.antMatchers("/admin-dashboard").hasRole("ADMIN")    
         	.antMatchers("/tourist-dashboard").hasAnyRole("ADMIN", "VINTNER", "TOURIST")
         	.antMatchers("/winery-dashboard").hasAnyRole("ADMIN", "VINTNER")
         	.anyRequest().authenticated() 
@@ -78,8 +78,8 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.invalidateHttpSession(true)    // set invalidation state when logout
         	.deleteCookies("JSESSIONID")     
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))            
-            .logoutSuccessUrl("/login")
-        ;
+            .logoutSuccessUrl("/login");
+        
         //.and()    
         //.csrf().disable();    // temporary disable to allow POST messages)  
     }
