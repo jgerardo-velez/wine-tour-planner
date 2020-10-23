@@ -34,7 +34,7 @@ public class Winery {
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "region_id", referencedColumnName = "id")
-    private Region regionId;
+    private Region region;
 
 	public int getId() {
 		return id;
@@ -76,12 +76,12 @@ public class Winery {
 		this.website = website;
 	}
 
-	public Region getRegionId() {
-		return regionId;
+	public Region getRegion() {
+		return region;
 	}
 
-	public void setRegionId(Region regionId) {
-		this.regionId = regionId;
+	public void setRegion(Region region) {
+		this.region = region;
 	}  
 	
 }

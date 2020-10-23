@@ -16,6 +16,7 @@
             			<th>Name</th>
             			<th>Address</th>
             			<th>Phone</th>
+            			<th>Region</th>
             			<th>Website</th>
         			</tr>
     			</thead>
@@ -25,9 +26,10 @@
         			</tr>
         			<tr th:each="winery : ${wineries}">
             			<td><span th:text="${winery.name}">Name</span></td>
-            			<td><span th:text="${winery.Address}">Address</span></td>
-            			<td><span th:text="${winery.Phone}">Phone</span></td>
-            			<td><span th:text="${winery.website}">Website</span></td>
+            			<td><span th:text="${winery.address}">Address</span></td>
+            			<td><span th:text="${winery.phone}">Phone</span></td>
+            			<td><span th:text="${winery.region.name + ', ' + winery.region.country}">Region</span></td>
+            		 	<td><a th:href="${winery.website}" th:text="${winery.website}" th:target="_blank">Website</a></td> 
         			</tr>
     			</tbody>
 			</table>

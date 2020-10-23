@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import edu.cetys.springlabs.dto.RegionDto;
 import edu.cetys.springlabs.dto.WineryDto;
+import edu.cetys.springlabs.model.Region;
 import edu.cetys.springlabs.model.Winery;
 import edu.cetys.springlabs.service.WineryService;
 
@@ -43,6 +45,19 @@ public class TouristController {
 			wineryDto.setAddress(dbWinery.getAddress());
 			wineryDto.setPhone(dbWinery.getPhone());
 			wineryDto.setWebsite(dbWinery.getWebsite());
+			
+			
+			Region region = dbWinery.getRegion();
+			
+			if (region != null) {
+				RegionDto regionDto = new RegionDto();
+				regionDto.setId(region.getId());
+				regionDto.setName(region.getName());
+				regionDto.setCode(region.getCode());
+				regionDto.setCountry(region.getCountry());
+				
+				wineryDto.setRegion(regionDto);
+			}
 			
 			wineries.add(wineryDto);
 		}

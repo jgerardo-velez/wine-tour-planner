@@ -8,6 +8,7 @@ public class WineryDto {
 	private String address;
 	private String phone;
 	private String website;
+	private RegionDto region;
 	
 	public int getId() {
 		return id;
@@ -47,6 +48,14 @@ public class WineryDto {
 	
 	public void setWebsite(String website) {
 		this.website = website;
+	}
+	
+	public RegionDto getRegion() {
+		return region;
+	}
+
+	public void setRegion(RegionDto region) {
+		this.region = region;
 	}
 	
 }
