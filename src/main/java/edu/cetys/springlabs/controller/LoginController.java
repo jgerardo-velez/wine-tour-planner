@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.cetys.springlabs.dto.form.UserCredentialForm;
 import edu.cetys.springlabs.enums.UserRole;
-import edu.cetys.springlabs.model.UserCredential;
 import edu.cetys.springlabs.service.UserService;
 
 
@@ -37,9 +37,9 @@ public class LoginController {
 	}
 	
 	@PostMapping("/password-reset")
-	public String passwordReset(@ModelAttribute UserCredential userCredential, RedirectAttributes redirectAttributes, Model model) {
+	public String passwordReset(@ModelAttribute UserCredentialForm userCredential, RedirectAttributes redirectAttributes, Model model) {
 		
-		logger.warn("TODO: Send email with password reser to: " + userCredential.getEmail());
+		logger.warn("TODO: Send email with password reset to: " + userCredential.getEmail());
 		
 		redirectAttributes.addFlashAttribute("confirmationMessage",  "Thank you, you will shortly receive an email with instructions on how to reset your password.");
 		

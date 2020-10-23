@@ -1,13 +1,15 @@
 package edu.cetys.springlabs.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import edu.cetys.springlabs.dto.form.UserRegistrationForm;
 import edu.cetys.springlabs.model.User;
-import edu.cetys.springlabs.model.UserRegistration;
 import edu.cetys.springlabs.repository.UserRepository;
 
 
@@ -22,8 +24,14 @@ public class UserService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	public List<User> findAll() {
+		
+		List<User> dbUsers = userRepository.findAll();
+		
+	    return dbUsers;
+	}
 	
-	public boolean addUser(UserRegistration userRegistration) {
+	public boolean addUser(UserRegistrationForm userRegistration) {
 		
 		User user = new User();
 		

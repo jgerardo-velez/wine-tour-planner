@@ -1,4 +1,4 @@
-package edu.cetys.springlabs.model;
+package edu.cetys.springlabs.dto.form;
 
 //import lombok.Getter;
 //import lombok.Setter;
@@ -6,7 +6,7 @@ package edu.cetys.springlabs.model;
 
 //@Getter 
 //@Setter
-public class UserRegistration {
+public class UserRegistrationForm {
 
 	private String email;
 	public String getName() {

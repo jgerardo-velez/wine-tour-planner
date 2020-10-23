@@ -1,19 +1,19 @@
-package edu.cetys.springlabs.model;
+package edu.cetys.springlabs.dto.form;
 
 //import lombok.Getter;
 //import lombok.Setter;
 
 //@Getter 
 //@Setter
-public class UserCredential {
+public class UserCredentialForm {
 	private String email;
 	private String password;
 	private String role;
 	
-	public UserCredential() {	
+	public UserCredentialForm() {	
 	}
 	
-	public UserCredential(String email, String password, String role) {
+	public UserCredentialForm(String email, String password, String role) {
 		this.email = email;
 		this.password = password;
 		this.role = role;

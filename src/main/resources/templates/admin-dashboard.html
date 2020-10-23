@@ -1,21 +1,41 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-<head>
-    <meta charset="UTF-8">
-    <title>Wine Tour Planner</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="css/winery-tour-planner.css">
-</head>
-    <body>
+	<head>
+    	<meta charset="UTF-8">
+    	<title>Wine Tour Planner</title>
+    	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+    	<link rel="stylesheet" href="css/winery-tour-planner.css">
+	</head>
+	<body>
         <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-
+        
         <div>
-             Admin Dashboard Page - Under Construction.
+             <table>
+    			<thead>
+        			<tr>
+            			<th>Email</th>
+            			<th>Name</th>
+            			<th>Role</th>
+            			<th>Active</th>
+        			</tr>
+    			</thead>
+    			<tbody>
+					<tr th:if="${users.empty}">
+            			<td colspan="2"> No Users Available</td>
+        			</tr>
+        			<tr th:each="user : ${users}">
+            			<td><span th:text="${user.email}">Email</span></td>
+            			<td><span th:text="${user.name}">Name</span></td>
+            			<td><span th:text="${user.role}">Role</span></td>
+            			<td><span th:text="${user.active}">Active</span></td>
+        			</tr>
+    			</tbody>
+			</table>
         </div>
-
+       
         <br/>
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
         </form>
-    </body>
+</body>
 </html>
