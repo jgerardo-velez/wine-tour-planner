@@ -10,9 +10,57 @@
         <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 
         <div>
-             Winery Dashboard Page - Under Construction.
+             <table>
+    			<thead>
+        			<tr>
+            			<th>Name</th>
+            			<th>Address</th>
+            			<th>Phone</th>
+            			<th>Region</th>
+            			<th>Website</th>
+        			</tr>
+    			</thead>
+    			<tbody>
+    			    <tr th:if="${winery == null}">
+            			<td colspan="2"> No Winery Available</td>
+        			</tr>
+        			<tr th:if="${winery != null}">
+            			<td><span th:text="${winery.name}">Name</span></td>
+            			<td><span th:text="${winery.address}">Address</span></td>
+            			<td><span th:text="${winery.phone}">Phone</span></td>
+            			<td><span th:text="${winery.region.name + ', ' + winery.region.country}">Region</span></td>
+            		 	<td><a th:href="${winery.website}" th:text="${winery.website}" th:target="_blank">Website</a></td> 
+        			</tr>
+    			</tbody>
+			</table>
         </div>
 
+		<br/>
+		<br/>
+		
+		<div>
+             <table>
+    			<thead>
+        			<tr>
+  						<th>Image</th>
+            			<th>SKU</th>
+            			<th>Name</th>
+            			<th>Price</th>
+        			</tr>
+    			</thead>
+    			<tbody>
+					<tr th:if="${winery.products.empty}">
+            			<td colspan="2"> No Products Available</td>
+        			</tr>
+        			<tr th:each="product : ${winery.products}">
+        			    <td><img th:src="@{/images/products/} + ${product.image}"></td>
+            			<td><span th:text="${product.sku}">SKU</span></td>
+            			<td><span th:text="${product.name}">Name</span></td>
+            			<td><span th:text="${product.currency} + '' + ${product.price}">Price</span></td> 
+        			</tr>
+    			</tbody>
+			</table>
+        </div>
         <br/>
         <form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>

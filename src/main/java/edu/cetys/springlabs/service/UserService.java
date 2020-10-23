@@ -1,14 +1,17 @@
 package edu.cetys.springlabs.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.cetys.springlabs.dto.form.UserRegistrationForm;
+import edu.cetys.springlabs.model.MyUserDetails;
 import edu.cetys.springlabs.model.User;
 import edu.cetys.springlabs.repository.UserRepository;
 
@@ -29,6 +32,22 @@ public class UserService {
 		List<User> dbUsers = userRepository.findAll();
 		
 	    return dbUsers;
+	}
+	
+	public User findByEmail(String email) throws UsernameNotFoundException {
+		
+		Optional<User> optionalUser = userRepository.findByEmail(email);
+		
+		optionalUser.orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + email));
+		
+		User dbUser = optionalUser.get(); 
+		
+		//logger.info("dbUser: " + dbUser.getEmail());
+		//logger.info("dbUser: " + dbUser.getId());
+		
+		return dbUser;
+		//return user.map(User::new).get();
+		
 	}
 	
 	public boolean addUser(UserRegistrationForm userRegistration) {

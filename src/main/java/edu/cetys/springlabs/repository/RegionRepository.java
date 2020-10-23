@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import edu.cetys.springlabs.model.Region;
 
 
-public interface RegionRepository  extends JpaRepository<Region, Integer> {
+public interface RegionRepository extends JpaRepository<Region, Integer> {
 
 }

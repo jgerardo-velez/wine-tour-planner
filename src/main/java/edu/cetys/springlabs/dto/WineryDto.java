@@ -1,5 +1,6 @@
 package edu.cetys.springlabs.dto;
 
+import java.util.List;
 
 public class WineryDto {
 
@@ -9,6 +10,7 @@ public class WineryDto {
 	private String phone;
 	private String website;
 	private RegionDto region;
+	private List<ProductDto> products;
 	
 	public int getId() {
 		return id;
@@ -56,6 +58,14 @@ public class WineryDto {
 
 	public void setRegion(RegionDto region) {
 		this.region = region;
+	}
+
+	public List<ProductDto> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<ProductDto> products) {
+		this.products = products;
 	}
 	
 }

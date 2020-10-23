@@ -1,5 +1,8 @@
 package edu.cetys.springlabs.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,9 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-//import javax.persistence.JoinColumn;
-//import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -36,6 +38,10 @@ public class Winery {
     @JoinColumn(name = "region_id", referencedColumnName = "id")
     private Region region;
 
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "winery_id", referencedColumnName = "id")
+	private List<Product> products = new ArrayList<Product>();
+	
 	public int getId() {
 		return id;
 	}
@@ -82,6 +88,14 @@ public class Winery {
 
 	public void setRegion(Region region) {
 		this.region = region;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}  
 	
 }

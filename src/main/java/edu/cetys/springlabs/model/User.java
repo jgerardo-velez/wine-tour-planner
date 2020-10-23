@@ -1,9 +1,12 @@
 package edu.cetys.springlabs.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
@@ -30,6 +33,10 @@ public class User {
 	@Column(name="active", nullable=false)
 	private boolean active;
 
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "winery_id", referencedColumnName = "id")
+    private Winery winery;
+	
 	public int getId() {
 		return id;
 	}
@@ -76,6 +83,14 @@ public class User {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public Winery getWinery() {
+		return winery;
+	}
+
+	public void setWinery(Winery winery) {
+		this.winery = winery;
 	}
 	
 }
