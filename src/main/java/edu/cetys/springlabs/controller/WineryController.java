@@ -91,7 +91,7 @@ public class WineryController {
 				
 				wineryDto.setProducts(productsDtos);
 			}
-		
+				
 			model.addAttribute("winery", wineryDto);
 		}
 		

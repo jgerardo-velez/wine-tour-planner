@@ -111,5 +111,15 @@ INSERT INTO users (email, name, role, winery_id, active, password)
 VALUES('lacetto@winetourplanner.com', 'Jesus Lopez', 'ROLE_VINTNER', '3', true, '$2a$10$y5lUhRNeDNeq46Gc26g3MuoFbtCM/ZQbxUOV4sGkCTPWjK75ySr7m');
 
 
+CREATE TABLE `wine-tour-planner`.`users_tokens` (
+  `token` varchar(100) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `expiration_time` Datetime not null,
+  `active` tinyint(4) NOT NULL,
+  PRIMARY KEY (`token`),
+  FOREIGN KEY (user_id) 
+  REFERENCES users(id)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
 
 

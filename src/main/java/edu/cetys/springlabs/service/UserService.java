@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import edu.cetys.springlabs.dto.form.UserRegistrationForm;
-import edu.cetys.springlabs.model.MyUserDetails;
 import edu.cetys.springlabs.model.User;
 import edu.cetys.springlabs.repository.UserRepository;
 
@@ -42,12 +41,8 @@ public class UserService {
 		
 		User dbUser = optionalUser.get(); 
 		
-		//logger.info("dbUser: " + dbUser.getEmail());
-		//logger.info("dbUser: " + dbUser.getId());
 		
 		return dbUser;
-		//return user.map(User::new).get();
-		
 	}
 	
 	public boolean addUser(UserRegistrationForm userRegistration) {

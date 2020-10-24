@@ -1,6 +1,5 @@
 package edu.cetys.springlabs.dto;
 
-import javax.persistence.Column;
 
 public class UserDto {
 	
