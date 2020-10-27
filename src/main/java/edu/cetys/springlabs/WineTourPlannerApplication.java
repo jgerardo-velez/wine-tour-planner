@@ -12,11 +12,9 @@ import edu.cetys.springlabs.repository.WineryRepository;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackageClasses = {
-		UserRepository.class, 
 		WineryRepository.class, 
 		RegionRepository.class,
-		ProductRepository.class,
-		Token.class})
+		ProductRepository.class})
 public class WineTourPlannerApplication {
 
 	public static void main(String[] args) {

@@ -66,9 +66,9 @@ public class UserService {
 		}
 		
 		// Save record into database
-		User storedUser = userRepository.save(user);
+		int storedUser = userRepository.save(user);
 		
-		return storedUser != null ? true : false;
+		return storedUser == 1 ? true : false;
 	}
 	
 }
