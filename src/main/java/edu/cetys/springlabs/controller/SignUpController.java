@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.cetys.springlabs.dto.form.UserRegistrationForm;
 import edu.cetys.springlabs.enums.UserRole;
-import edu.cetys.springlabs.model.UserRegistration;
 import edu.cetys.springlabs.service.UserService;
 
 
@@ -41,7 +41,7 @@ public class SignUpController {
 	
 	
 	@PostMapping("/sign-up")
-	public String loginSubmit(@ModelAttribute UserRegistration userRegistration, /*RedirectAttributes redirectAttributes,*/ Model model) {
+	public String loginSubmit(@ModelAttribute UserRegistrationForm userRegistration, /*RedirectAttributes redirectAttributes,*/ Model model) {
 		
 		logger.info("New user registration");
 		userService.addUser(userRegistration);

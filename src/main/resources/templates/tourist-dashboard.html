@@ -10,7 +10,29 @@
         <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 
         <div>
-             Tourist Dashboard Page - Under Construction.
+             <table>
+    			<thead>
+        			<tr>
+            			<th>Name</th>
+            			<th>Address</th>
+            			<th>Phone</th>
+            			<th>Region</th>
+            			<th>Website</th>
+        			</tr>
+    			</thead>
+    			<tbody>
+					<tr th:if="${wineries.empty}">
+            			<td colspan="2"> No Wineries Available</td>
+        			</tr>
+        			<tr th:each="winery : ${wineries}">
+            			<td><span th:text="${winery.name}">Name</span></td>
+            			<td><span th:text="${winery.address}">Address</span></td>
+            			<td><span th:text="${winery.phone}">Phone</span></td>
+            			<td><span th:text="${winery.region.name + ', ' + winery.region.country}">Region</span></td>
+            		 	<td><a th:href="${winery.website}" th:text="${winery.website}" th:target="_blank">Website</a></td> 
+        			</tr>
+    			</tbody>
+			</table>
         </div>
 
         <br/>
