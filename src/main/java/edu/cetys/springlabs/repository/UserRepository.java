@@ -51,19 +51,14 @@ public class UserRepository {
 		jdbcTemplate.query(query, new RowCallbackHandler() {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
-				if (rs != null) {
-					while (rs.next()) {
-						System.out.println("EMAIL: " + rs.getString("email"));
-						User user = new User();
-						user.setId(rs.getInt("id"));
-						user.setEmail(rs.getString("email"));
-						user.setName(rs.getString("name"));
-						user.setRole(rs.getString("role"));
-						user.setActive(rs.getBoolean("active"));
+				User user = new User();
+				user.setId(rs.getInt("id"));
+				user.setEmail(rs.getString("email"));
+				user.setName(rs.getString("name"));
+				user.setRole(rs.getString("role"));
+				user.setActive(rs.getBoolean("active"));
 						
-		                users.add(user);
-					}
-				}
+		        users.add(user);
 			}
 		});
 		

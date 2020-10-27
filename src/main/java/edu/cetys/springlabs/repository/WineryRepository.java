@@ -33,23 +33,21 @@ public class WineryRepository {
 		jdbcTemplate.query(query, new RowCallbackHandler() {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
-				while (rs.next()) {
-					Region region = new Region();
-					region.setId(rs.getInt("region_id"));
-					region.setName(rs.getString("region_name"));
-					region.setCode(rs.getString("region_code"));
-					region.setCountry(rs.getString("region_country"));
+				Region region = new Region();
+				region.setId(rs.getInt("region_id"));
+				region.setName(rs.getString("region_name"));
+				region.setCode(rs.getString("region_code"));
+				region.setCountry(rs.getString("region_country"));
 					
-					Winery winery = new Winery();
-					winery.setId(rs.getInt("id"));
-					winery.setName(rs.getString("name"));
-					winery.setAddress(rs.getString("address"));
-					winery.setPhone(rs.getString("phone"));
-					winery.setWebsite(rs.getString("website"));
-					winery.setRegion(region);
+				Winery winery = new Winery();
+				winery.setId(rs.getInt("id"));
+				winery.setName(rs.getString("name"));
+				winery.setAddress(rs.getString("address"));
+				winery.setPhone(rs.getString("phone"));
+				winery.setWebsite(rs.getString("website"));
+				winery.setRegion(region);
 					
-					wineries.add(winery);
-				}
+				wineries.add(winery);
 			}
 		});
 		

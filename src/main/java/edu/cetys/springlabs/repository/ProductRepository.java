@@ -31,16 +31,14 @@ public class ProductRepository {
 		jdbcTemplate.query(query, new Object[]{wineryId}, new RowCallbackHandler() {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
-				while (rs.next()) {
-					Product product = new Product();
-					product.setSku(rs.getInt("sku"));
-					product.setName(rs.getString("name"));
-					product.setPrice(rs.getDouble("price"));
-					product.setCurrency(rs.getString("currency"));
-					product.setImage(rs.getString("image"));
+				Product product = new Product();
+				product.setSku(rs.getInt("sku"));
+				product.setName(rs.getString("name"));
+				product.setPrice(rs.getDouble("price"));
+				product.setCurrency(rs.getString("currency"));
+				product.setImage(rs.getString("image"));
 					
-					products.add(product);
-				}
+				products.add(product);
 			}
 		});
 		
