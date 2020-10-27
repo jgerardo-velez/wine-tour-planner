@@ -20,7 +20,9 @@ import edu.cetys.springlabs.model.Product;
 import edu.cetys.springlabs.model.Region;
 import edu.cetys.springlabs.model.User;
 import edu.cetys.springlabs.model.Winery;
+import edu.cetys.springlabs.service.ProductService;
 import edu.cetys.springlabs.service.UserService;
+
 
 @Controller
 public class WineryController {
@@ -30,27 +32,14 @@ public class WineryController {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	ProductService productService;
 	
 	
 	@GetMapping("/winery-dashboard")
 	public String wineryDashboard(HttpServletRequest request, Model model) {
-	
-		/*
-		logger.info("Getting inside the winery dashboard!");
-		logger.info("AdminController -> User: " + request.getUserPrincipal());
-		logger.info("AdminController -> User: " + request.getUserPrincipal().getName());
-		*/
 		
-		// TODO: Try to include the user id in MyUserDetails model
-		User dbUser = userService.findByEmail(request.getUserPrincipal().getName());
-		
-		/*
-		logger.info("===== DB USER =====");
-		logger.info("dbUser.Id: " + dbUser.getId());
-		logger.info("dbUser.Email: " + dbUser.getEmail());
-		*/
-		
-		Winery dbWinery = dbUser.getWinery();
+		Winery dbWinery = userService.findWineryByEmail(request.getUserPrincipal().getName());
 		
 		if (dbWinery != null) {
 			// convert to dto objects
@@ -73,8 +62,10 @@ public class WineryController {
 				wineryDto.setRegion(regionDto);
 			}
 			
-			List<Product> dbProducts = dbWinery.getProducts();
+			List<Product> dbProducts = productService.findAllByWinery(dbWinery.getId());
 			List<ProductDto> productsDtos = new ArrayList<ProductDto>();
+			
+			System.out.println("dbProducts size: " + dbProducts.size());
 			
 			if (dbProducts != null) {
 				

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import edu.cetys.springlabs.dto.form.UserRegistrationForm;
 import edu.cetys.springlabs.model.User;
+import edu.cetys.springlabs.model.Winery;
 import edu.cetys.springlabs.repository.UserRepository;
 
 
@@ -26,12 +27,14 @@ public class UserService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
+	
 	public List<User> findAll() {
 		
 		List<User> dbUsers = userRepository.findAll();
 		
 	    return dbUsers;
 	}
+	
 	
 	public User findByEmail(String email) throws UsernameNotFoundException {
 		
@@ -45,6 +48,20 @@ public class UserService {
 		return dbUser;
 	}
 	
+	
+	public Winery findWineryByEmail(String email) throws UsernameNotFoundException {
+		
+		Optional<Winery> optionalWinery = userRepository.findWineryByEmail(email);
+		
+		optionalWinery.orElseThrow(() -> new UsernameNotFoundException("User Not Found: " + email));
+		
+		Winery dbWinery = optionalWinery.get(); 
+		
+		
+		return dbWinery;
+	}
+
+
 	public boolean addUser(UserRegistrationForm userRegistration) {
 		
 		User user = new User();

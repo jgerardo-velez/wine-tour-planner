@@ -3,43 +3,21 @@ package edu.cetys.springlabs.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
-@Entity
-@Table(name = "Wineries", schema="wine-tour-planner")
 public class Winery {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="name", length=45, nullable=false, unique=false)
 	private String name;
 	
-	@Column(name="address", length=100, nullable=false, unique=false)
 	private String address;
 	
-	@Column(name="phone", length=45, nullable=false, unique=false)
 	private String phone;
 	
-	@Column(name="website", length=100, nullable=false, unique=false)
 	private String website;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "region_id", referencedColumnName = "id")
-    private Region region;
+	private Region region;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "winery_id", referencedColumnName = "id")
 	private List<Product> products = new ArrayList<Product>();
 	
 	public int getId() {

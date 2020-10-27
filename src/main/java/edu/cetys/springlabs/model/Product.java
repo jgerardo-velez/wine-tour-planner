@@ -1,33 +1,17 @@
 package edu.cetys.springlabs.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "products", schema="wine-tour-planner")
 public class Product {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int sku;
 	
-	@Column(name="winery_id", nullable=false, unique=false)
 	private int wineryId;
 	
-	@Column(name="name", length=100, nullable=false, unique=false)
 	private String name;
 	
-	@Column(name="price", nullable=true, unique=false)
 	private double price;
 	
-	@Column(name="currency", length=10, nullable=true, unique=false)
 	private String currency;
 	
-	@Column(name="image", length=25, nullable=true, unique=false)
 	private String image;
 
 	public int getSku() {

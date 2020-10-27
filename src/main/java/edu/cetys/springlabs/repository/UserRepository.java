@@ -11,7 +11,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
 
+import edu.cetys.springlabs.model.Region;
 import edu.cetys.springlabs.model.User;
+import edu.cetys.springlabs.model.Winery;
 
 
 @Repository
@@ -20,21 +22,6 @@ public class UserRepository {
 	@Autowired
     private JdbcTemplate jdbcTemplate;
 	
-	/*
-	 @Override
-    public Optional<Book> findById(Long id) {
-        return jdbcTemplate.queryForObject(
-                "select * from books where id = ?",
-                new Object[]{id},
-                (rs, rowNum) ->
-                        Optional.of(new Book(
-                                rs.getLong("id"),
-                                rs.getString("name"),
-                                rs.getBigDecimal("price")
-                        ))
-        );
-    }
-	 */
 	
 	public Optional<User> findByEmail(String email) {
 		String query = "SELECT * FROM users WHERE email = ?";
@@ -64,21 +51,55 @@ public class UserRepository {
 		jdbcTemplate.query(query, new RowCallbackHandler() {
 			@Override
 			public void processRow(ResultSet rs) throws SQLException {
-				while (rs.next()) {
-					User user = new User();
-					user.setId(rs.getInt("id"));
-					user.setEmail(rs.getString("email"));
-					user.setName(rs.getString("name"));
-					user.setRole(rs.getString("role"));
-					user.setActive(rs.getBoolean("active"));
-					
-	                users.add(user);
+				if (rs != null) {
+					while (rs.next()) {
+						System.out.println("EMAIL: " + rs.getString("email"));
+						User user = new User();
+						user.setId(rs.getInt("id"));
+						user.setEmail(rs.getString("email"));
+						user.setName(rs.getString("name"));
+						user.setRole(rs.getString("role"));
+						user.setActive(rs.getBoolean("active"));
+						
+		                users.add(user);
+					}
 				}
 			}
 		});
 		
 		
 		return users;
+	}
+	
+	
+	public Optional<Winery> findWineryByEmail(String email) {
+		String query = "SELECT u.email, w.id as winery_id, w.name as winery_name, w.address as winery_address, " +
+						"w.phone as winery_phone, w.website as winery_website, r.id as region_id, " +
+						"r.name as region_name, r.code as region_code, r.country as region_country " +
+						"FROM users u " +
+						"INNER JOIN wineries w ON u.winery_id = w.id " +
+						"INNER JOIN regions r ON w.region_id = r.id " +
+						"WHERE u.email = ?";
+				
+		return jdbcTemplate.queryForObject(query, new Object[]{email},
+				(rs, rowNum) -> {
+                	Region region = new Region();
+					region.setId(rs.getInt("region_id"));
+					region.setName(rs.getString("region_name"));
+					region.setCode(rs.getString("region_code"));
+					region.setCountry(rs.getString("region_country"));
+					
+					Winery winery = new Winery();
+					winery.setId(rs.getInt("winery_id"));
+					winery.setName(rs.getString("winery_name"));
+					winery.setAddress(rs.getString("winery_address"));
+					winery.setPhone(rs.getString("winery_phone"));
+					winery.setWebsite(rs.getString("winery_website"));
+					winery.setRegion(region);
+				
+                	return Optional.of(winery);
+				}
+        );
 	}
 	
 	
