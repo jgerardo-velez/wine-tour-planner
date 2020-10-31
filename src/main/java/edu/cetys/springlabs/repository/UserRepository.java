@@ -105,4 +105,39 @@ public class UserRepository {
         return jdbcTemplate.update(query, user.getEmail(), user.getName(), user.getRole(), user.isActive());
     }
     
+    
+   
+    public Optional<User> findByToken(String token) {
+    	
+    	String query = "SELECT u.id, u.email, u.name, u.password, u.role, u.active " + 
+    				   "FROM tokens t  " + 
+    			       "INNER JOIN users u ON u.id = t.user_id " + 
+    			       "WHERE t.token = ? " +
+    			       "AND t.active = true"; 
+    	
+    	//System.out.println("Query: " + query);
+    	
+    	return jdbcTemplate.queryForObject(query, new Object[]{token},
+				(rs, rowNum) -> {
+                	User user = new User();
+                	user.setId(rs.getInt("id"));
+					user.setEmail(rs.getString("email"));
+					user.setName(rs.getString("name"));
+					user.setPassword(rs.getString("password"));
+					user.setRole(rs.getString("role"));
+					user.setActive(rs.getBoolean("active"));
+				
+                	return Optional.of(user);
+				}
+        );
+    }
+    
+    
+    public int updatePassword(User user) {
+    	
+    	String query = "UPDATE users SET password = ? WHERE id = ?";
+    	
+        return jdbcTemplate.update(query, user.getPassword(), user.getId());
+    }
+    
 }

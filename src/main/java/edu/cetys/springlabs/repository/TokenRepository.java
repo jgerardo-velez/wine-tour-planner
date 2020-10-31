@@ -23,5 +23,10 @@ public class TokenRepository {
         return jdbcTemplate.update("INSERT INTO tokens (token, user_id, expiration_time, active) values(uuid(),?,?,?)",
                 token.getUserId(), token.getExpirationTime(), token.isActive());
     }
+    
+    public int deactivateToken(String token) {
+        return jdbcTemplate.update("UPDATE tokens SET active = false WHERE token = ?", token);
+    }
 
 }
+

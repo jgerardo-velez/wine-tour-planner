@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.cetys.springlabs.dto.form.UserRegistrationForm;
 import edu.cetys.springlabs.model.User;
 import edu.cetys.springlabs.model.Winery;
+import edu.cetys.springlabs.repository.TokenRepository;
 import edu.cetys.springlabs.repository.UserRepository;
 
 
@@ -23,6 +25,9 @@ public class UserService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	TokenRepository tokenRepository;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -86,6 +91,26 @@ public class UserService {
 		int storedUser = userRepository.save(user);
 		
 		return storedUser == 1 ? true : false;
+	}
+	
+	
+	@Transactional
+	public boolean passwordResetByToken(String token, String password) throws UsernameNotFoundException {
+		
+		Optional<User> optionalUser = userRepository.findByToken(token);
+		
+		System.out.println("optionalUser: " + optionalUser);
+		
+		optionalUser.orElseThrow(() -> new UsernameNotFoundException("Token Not Found: " + token));
+		
+		User user = optionalUser.get(); 
+		
+		user.setPassword(passwordEncoder.encode(password));
+		
+		userRepository.updatePassword(user);
+		tokenRepository.deactivateToken(token);
+		
+		return true;
 	}
 	
 }

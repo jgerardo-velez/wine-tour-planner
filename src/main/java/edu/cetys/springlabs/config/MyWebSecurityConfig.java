@@ -55,6 +55,8 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
     	http
         .authorizeRequests()
             .antMatchers(HttpMethod.POST, "/password-reset").permitAll()
+            .antMatchers(HttpMethod.GET, "/change-password").permitAll()
+            .antMatchers(HttpMethod.POST, "/change-password").permitAll()
             .antMatchers(HttpMethod.POST, "/sign-up").permitAll()
         	.antMatchers("/sign-up").permitAll()
         	.antMatchers("/forgot-password").permitAll()
@@ -78,10 +80,11 @@ public class MyWebSecurityConfig extends WebSecurityConfigurerAdapter {
         	.invalidateHttpSession(true)    // set invalidation state when logout
         	.deleteCookies("JSESSIONID")     
             .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))            
-            .logoutSuccessUrl("/login");
+            .logoutSuccessUrl("/login")
         
         //.and()    
-        //.csrf().disable();    // temporary disable to allow POST messages)  
+        //.csrf().disable()
+            ;    // temporary disable to allow POST messages)  
     }
 	
     

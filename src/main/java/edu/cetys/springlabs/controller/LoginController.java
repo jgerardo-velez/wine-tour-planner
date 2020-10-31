@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.cetys.springlabs.dto.form.UserCredentialForm;
@@ -76,4 +77,41 @@ public class LoginController {
 		return "redirect:/forgot-password";
 	}
 	
+	
+	@GetMapping("/change-password") 
+	public String changePassword(@RequestParam String token, RedirectAttributes redirectAttributes, Model model) {
+		
+		logger.info("Inside GET change password with Token: " + token);
+		
+		model.addAttribute("token", token);
+		
+		return "change-password";
+	}
+	
+	@PostMapping("/change-password") 
+	public String changePasswordByToken(@RequestParam String password, 
+										@RequestParam String passwordConfirmation, 
+										@RequestParam String token,
+										RedirectAttributes redirectAttributes, 
+										Model model) {
+		
+		if (password == null || passwordConfirmation == null || token == null ) {
+			model.addAttribute("error", "Bad Request");
+		}
+		
+		if (!password.equals(passwordConfirmation)  ) {
+			model.addAttribute("error", "Password mismatch");
+		} 
+		
+		if (model.getAttribute("error") == null) {
+			try {
+				userService.passwordResetByToken(token, password);
+				model.addAttribute("success", Boolean.TRUE);
+			} catch(Exception e) {
+				model.addAttribute("error", "Invalid Token");
+			}
+		}
+		
+		return "change-password";
+	}
 }
