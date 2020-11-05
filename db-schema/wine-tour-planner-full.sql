@@ -1,4 +1,21 @@
-CREATE TABLE `wine-tour-planner`.`regions` (
+CREATE DATABASE `wine-tour-planner` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `wine-tour-planner`;
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `role` varchar(50) NOT NULL,
+  `winery_id` int(11) DEFAULT NULL,
+  `active` tinyint(4) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `regions` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `code` VARCHAR(45) NOT NULL,
@@ -8,10 +25,8 @@ CREATE TABLE `wine-tour-planner`.`regions` (
   UNIQUE INDEX `code_UNIQUE` (`code` ASC)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-INSERT INTO regions (name, code, country) VALUES ('Valle de Guadalupe', 'MEXICO_VALLE_GUADALUPE', 'Mexico');
 
-
-CREATE TABLE `wine-tour-planner`.`wineries` (
+CREATE TABLE `wineries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `address` varchar(100),
@@ -25,6 +40,35 @@ CREATE TABLE `wine-tour-planner`.`wineries` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+CREATE TABLE `products` (
+  `sku` int(11) NOT NULL,
+  `winery_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `price` DECIMAL(6,2) DEFAULT NULL,
+  `currency` varchar(10) DEFAULT NULL,
+  `image` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`sku`),
+  CONSTRAINT fk_winery_id
+  FOREIGN KEY (winery_id) REFERENCES wineries(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `tokens` (
+  `token` varchar(100) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `expiration_time` datetime NOT NULL,
+  `active` tinyint(4) NOT NULL,
+  PRIMARY KEY (`token`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- REGIONS
+INSERT INTO regions (name, code, country) VALUES ('Valle de Guadalupe', 'MEXICO_VALLE_GUADALUPE', 'Mexico');
+
+
+-- WINERIES
 INSERT INTO wineries (name, address, phone, website, region_id)
 VALUES('Bodegas de Santo Tomás', 'Miramar 666, Zona Centro, 22800 Ensenada, B.C.', '646 178 3333', 'http://santo-tomas.com/', 1);
 
@@ -41,18 +85,7 @@ INSERT INTO wineries (name, address, phone, website, region_id)
 VALUES('Monte Xanic', 'Francisco Zarco S/N, Col, 22750 Valle de Guadalupe, B.C.', '646 155 2080', 'https://montexanic.com.mx/', 1);
 
 
-CREATE TABLE `wine-tour-planner`.`products` (
-  `sku` int(11) NOT NULL,
-  `winery_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `price` DECIMAL(6,2) DEFAULT NULL,
-  `currency` varchar(10) DEFAULT NULL,
-  `image` varchar(25) DEFAULT NULL,
-  PRIMARY KEY (`sku`),
-  CONSTRAINT fk_winery_id
-  FOREIGN KEY (winery_id) REFERENCES wineries(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+-- PRODUCTS
 
 -- Santo Tomas
 INSERT INTO products (sku, winery_id, name, price, currency, image)
@@ -98,28 +131,26 @@ INSERT INTO products (sku, winery_id, name, price, currency, image)
 VALUES(40004, 4, 'Vino Blanco Andromeda 2018', 460.00, 'MXN $', '40004.jpg');
 
 
--- Add Winery id to the users table
-ALTER TABLE users 
-  ADD COLUMN winery_id INT(11) DEFAULT NULL AFTER role;
+-- USERS
 
+-- Add Admin
+INSERT INTO users (email, name, role, active, password)
+VALUES('admin@winetourplanner.com', 'Gerardo Velez', 'ROLE_ADMIN', true, '$2a$10$y5lUhRNeDNeq46Gc26g3MuoFbtCM/ZQbxUOV4sGkCTPWjK75ySr7m');
 
--- Replace the winery@winetourplanner.com to elcielo@winetourplanner.com
-UPDATE users SET email = 'elcielo@winetourplanner.com', winery_id = 4 WHERE id = 3;  
+-- Add Tourist
+INSERT INTO users (email, name, role, active, password)
+VALUES('tourist@winetourplanner.com', 'Eduardo Patron', 'ROLE_TOURIST', true, '$2a$10$y5lUhRNeDNeq46Gc26g3MuoFbtCM/ZQbxUOV4sGkCTPWjK75ySr7m');
 
--- Inser a new Vintner for LA Cetto
+-- Add Vintner for LA Cetto
 INSERT INTO users (email, name, role, winery_id, active, password)
 VALUES('lacetto@winetourplanner.com', 'Jesus Lopez', 'ROLE_VINTNER', '3', true, '$2a$10$y5lUhRNeDNeq46Gc26g3MuoFbtCM/ZQbxUOV4sGkCTPWjK75ySr7m');
 
+-- Add Vintner for El Cielo
+INSERT INTO users (email, name, role, winery_id, active, password)
+VALUES('elcielo@winetourplanner.com', 'Angel Gutierrez', 'ROLE_VINTNER', '4', true, '$2a$10$y5lUhRNeDNeq46Gc26g3MuoFbtCM/ZQbxUOV4sGkCTPWjK75ySr7m');
 
-CREATE TABLE `wine-tour-planner`.`users_tokens` (
-  `token` varchar(100) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `expiration_time` Datetime not null,
-  `active` tinyint(4) NOT NULL,
-  PRIMARY KEY (`token`),
-  FOREIGN KEY (user_id) 
-  REFERENCES users(id)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+
+
 
 
 
